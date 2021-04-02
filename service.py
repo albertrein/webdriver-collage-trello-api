@@ -24,13 +24,30 @@ def get_atividades():
 
 def get_atividade_dados(atividade):
 	informacoes = atividade.find_elements_by_class_name('ng-binding') #capturando spans com os textos
-	atividade_entregue = atividade.find_elements_by_class_name('barra-amarela') #capturando spans com os textos
+	atividade_entregue = atividade.find_elements_by_class_name('borda-amarela') #capturando spans com os textos
 	dict_atividade = ({'titulo' : informacoes[0].text, 'data' : informacoes[1].text})
 	if atividade_entregue.__len__() > 0:
 		dict_atividade.update({'status': 'concluida'})
 		return dict_atividade
 	dict_atividade.update({'status': 'nao-concluida'})
 	return dict_atividade
+
+
+def update_dados_cadeiras(lista1, lista2):
+    for item_lista2 in lista2:
+        item_lista1 = list(filter( lambda itm : itm['nome'] == item_lista2['nome'] , lista1))
+        if item_lista1.__len__() > 0:
+            for subitem_lista2 in item_lista2['atividades']:
+                subitem_lista1 = list(filter(lambda subitm : subitm['titulo'] == subitem_lista2['titulo'], item_lista1[0]['atividades']))
+                if subitem_lista1.__len__() > 0:
+                	if subitem_lista1[0]['status'] == subitem_lista2['status'] and subitem_lista1[0]['data'] == subitem_lista2['data']:
+                	    print('Item lista2:', item_lista2['nome'], 'Imutada atividade:', subitem_lista2['titulo'], '\n')
+                	else:
+                	    print('Item lista2:', item_lista2['nome'], 'atualizada atividade:', subitem_lista2['titulo'], '\n')
+                else:
+                    print('Item lista2:', item_lista2['nome'], 'Nova atividade:', subitem_lista2['titulo'], '\n')
+
+
 
 """
 Desativa a visualização da página
@@ -97,5 +114,11 @@ for i in range(lista_de_cadeiras.__len__()):
 	
 	volta_para_home()
 
+#varifica mudanças
+update_dados_cadeiras(config['aula'], cadeiras)
+#atualiza informacoes
+config['aula'] = cadeiras
 
-print(cadeiras)
+#atualiza arquivo de configuracoes
+with open('config/config.json', 'w', encoding='utf-8') as file_config:
+	json.dump(config, file_config, ensure_ascii=False, indent=4)
