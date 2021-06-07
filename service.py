@@ -48,7 +48,7 @@ def atualiza_dados_atuais(actual_data, new_data):
                 if atividade_atual['data'] != atividade_novos_dados['data'] or atividade_atual['status'] != atividade_novos_dados['status']:
                     atividade_atual['data'] = atividade_novos_dados['data']# Atualiza dados e salva no trello
                     atividade_atual['status'] = atividade_novos_dados['status']
-                    print(trello_app.update_card_list('602c556a262c131dfe4fef3e', "602c55c54b4b666d1da2a75f", cadeira_atual['nome']+' - '+atividade_atual['titulo']))
+                    print(trello_app.update_card_list('', "", cadeira_atual['nome']+' - '+atividade_atual['titulo']))
                 new_data[indice_cadeira_novos_dados]['atividades'].remove(atividade_novos_dados) #Remove a atividade já encontrada da lista de novos dados
         except:
             print("Não funcionou")
