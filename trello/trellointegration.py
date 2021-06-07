@@ -90,13 +90,4 @@ class TrelloIntegration:
         print('>>', TrelloIntegration.authentication)
 
 
-#trello = TrelloIntegration('91d6bae73e30343a4d9795982cdf4791', '12f0f57176416128f5c0b55850a4afe358bd81309e79c9aed8b65a5e6f3c5956', ['602c556a262c131dfe4fef3e'])
-    
-#res = trello.insert_new_card("Teste #2", '13/05/2021', 0)
-#print(res)
-
-#Testando captura de cards da lista
-#print(trello.update_card_list('602c556a262c131dfe4fef3e', "602c55c54b4b666d1da2a75f", "Introdução ao Desenvolvimento WEB - Envio de atividade - Aula 13 - CSS (Textos-Links - Trabalho)"))
-
-#print('Fim')
 

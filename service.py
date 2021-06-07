@@ -34,7 +34,7 @@ def get_atividade_dados(atividade):
 	return dict_atividade
 
 def atualiza_dados_atuais(actual_data, new_data):
-    trello_app = TrelloIntegration('91d6bae73e30343a4d9795982cdf4791', '12f0f57176416128f5c0b55850a4afe358bd81309e79c9aed8b65a5e6f3c5956', ['602c556a262c131dfe4fef3e'])
+    trello_app = TrelloIntegration('', '', [''])
     for cadeira_atual in actual_data: #Iterando os dados atuais
         try:
             cadeira_novos_dados = next((i for i in new_data if i['nome'] == cadeira_atual['nome']), None)# retorna com uma dict onde os nomes são iguais
@@ -55,7 +55,7 @@ def atualiza_dados_atuais(actual_data, new_data):
 
 
 def insere_novos_dados(actual_data, new_data):
-    trello = TrelloIntegration('91d6bae73e30343a4d9795982cdf4791', '12f0f57176416128f5c0b55850a4afe358bd81309e79c9aed8b65a5e6f3c5956', ['602c556a262c131dfe4fef3e'])
+    trello = TrelloIntegration('', '', [''])
     for cadeiras_novos_dados in new_data:
         cadeira_dados_atuais = next((i for i in actual_data if i['nome'] == cadeiras_novos_dados['nome']), None)
         for atividade_nova in cadeiras_novos_dados['atividades']:
@@ -68,7 +68,7 @@ def insere_novos_dados(actual_data, new_data):
 
 
 def update_dados_cadeiras(lista1, lista2):
-    trello = TrelloIntegration('91d6bae73e30343a4d9795982cdf4791', '12f0f57176416128f5c0b55850a4afe358bd81309e79c9aed8b65a5e6f3c5956', ['602c556a262c131dfe4fef3e'])
+    trello = TrelloIntegration('', '', [''])
     for item_lista2 in lista2:
         item_lista1 = list(filter( lambda itm : itm['nome'] == item_lista2['nome'] , lista1))
         if item_lista1.__len__() > 0:
