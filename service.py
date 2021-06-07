@@ -34,6 +34,7 @@ def get_atividade_dados(atividade):
 	return dict_atividade
 
 def atualiza_dados_atuais(actual_data, new_data):
+    trello_app = TrelloIntegration('91d6bae73e30343a4d9795982cdf4791', '12f0f57176416128f5c0b55850a4afe358bd81309e79c9aed8b65a5e6f3c5956', ['602c556a262c131dfe4fef3e'])
     for cadeira_atual in actual_data: #Iterando os dados atuais
         try:
             cadeira_novos_dados = next((i for i in new_data if i['nome'] == cadeira_atual['nome']), None)# retorna com uma dict onde os nomes são iguais
@@ -47,18 +48,20 @@ def atualiza_dados_atuais(actual_data, new_data):
                 if atividade_atual['data'] != atividade_novos_dados['data'] or atividade_atual['status'] != atividade_novos_dados['status']:
                     atividade_atual['data'] = atividade_novos_dados['data']# Atualiza dados e salva no trello
                     atividade_atual['status'] = atividade_novos_dados['status']
+                    print(trello_app.update_card_list('602c556a262c131dfe4fef3e', "602c55c54b4b666d1da2a75f", cadeira_atual['nome']+' - '+atividade_atual['titulo']))
                 new_data[indice_cadeira_novos_dados]['atividades'].remove(atividade_novos_dados) #Remove a atividade já encontrada da lista de novos dados
         except:
             print("Não funcionou")
 
 
 def insere_novos_dados(actual_data, new_data):
+    trello = TrelloIntegration('91d6bae73e30343a4d9795982cdf4791', '12f0f57176416128f5c0b55850a4afe358bd81309e79c9aed8b65a5e6f3c5956', ['602c556a262c131dfe4fef3e'])
     for cadeiras_novos_dados in new_data:
         cadeira_dados_atuais = next((i for i in actual_data if i['nome'] == cadeiras_novos_dados['nome']), None)
         for atividade_nova in cadeiras_novos_dados['atividades']:
             try:
                 cadeira_dados_atuais['atividades'].append(atividade_nova)
-                #cria novos cards
+                trello.insert_new_card(cadeiras_novos_dados['nome']+' - '+atividade_nova['titulo'], atividade_nova['data'][-10:], 0)
             except:
                 continue
     return True
